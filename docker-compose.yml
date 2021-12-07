@@ -1,18 +1,15 @@
 version: "3.7"
 
-volumes:
-  prometheus_data: {}
-  grafana_data: {}
-
 services:
   c3-monitoring-prometheus:
     image: prom/prometheus
     container_name: c3-monitoring-prometheus
     restart: unless-stopped
+    # required to use user root
     user: root
     volumes:
-      - ./prometheus:/etc/prometheus/
-      - prometheus_data:/prometheus
+      - ./volumes/prometheus/etc/prometheus:/etc/prometheus
+      - ./volumes/prometheus:/prometheus
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
       - "--storage.tsdb.path=/prometheus"
@@ -27,6 +24,24 @@ services:
       - c3-monitoring-alert-manager:c3-monitoring-alertmanager
     depends_on:
       - c3-monitoring-cadvisor
+
+  c3-monitoring-grafana:
+    image: grafana/grafana
+    container_name: c3-monitoring-grafana
+    # required to use user root
+    user: root
+    restart: unless-stopped
+    environment:
+      GF_INSTALL_PLUGINS: "grafana-clock-panel,grafana-simple-json-datasource"
+    volumes:
+      - ./volumes/grafana/etc/grafana/provisioning:/etc/grafana/provisioning
+      - ./volumes/grafana/var/lib/grafana:/var/lib/grafana
+    env_file:
+      - ./volumes/grafana/etc/grafana/config.monitoring
+    ports:
+      - 9070:3000
+    depends_on:
+      - c3-monitoring-prometheus
 
   c3-monitoring-node-exporter:
     image: prom/node-exporter
@@ -51,27 +66,10 @@ services:
     ports:
       - 9093:9093
     volumes:
-      - ./alertmanager/:/etc/alertmanager/
+      - ./volumes/alertmanager/etc/alertmanager:/etc/alertmanager/
     command:
       - "--config.file=/etc/alertmanager/config.yml"
       - "--storage.path=/alertmanager"
-
-  c3-monitoring-grafana:
-    image: grafana/grafana
-    container_name: c3-monitoring-grafana
-    user: "472"
-    restart: unless-stopped
-    environment:
-      GF_INSTALL_PLUGINS: "grafana-clock-panel,grafana-simple-json-datasource"
-    volumes:
-      - grafana_data:/var/lib/grafana
-      - ./grafana/provisioning/:/etc/grafana/provisioning/
-    env_file:
-      - ./grafana/config.monitoring
-    ports:
-      - 9070:3000
-    depends_on:
-      - c3-monitoring-prometheus
 
   c3-monitoring-cadvisor:
     image: gcr.io/cadvisor/cadvisor
@@ -84,3 +82,8 @@ services:
     expose:
       - 8080
     restart: unless-stopped
+
+# optional one can use volumes
+# volumes:
+#   prometheus_data: {}
+#   grafana_data: {}
