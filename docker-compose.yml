@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   c3-monitoring-prometheus:
-    image: prom/prometheus
+    image: prom/prometheus:v2.31.1
     container_name: c3-monitoring-prometheus
     restart: unless-stopped
     # required to use user root
@@ -26,7 +26,7 @@ services:
       - c3-monitoring-cadvisor
 
   c3-monitoring-grafana:
-    image: grafana/grafana
+    image: grafana/grafana:8.2.6
     container_name: c3-monitoring-grafana
     # required to use user root
     user: root
@@ -43,7 +43,7 @@ services:
       - c3-monitoring-prometheus
 
   c3-monitoring-node-exporter:
-    image: prom/node-exporter
+    image: prom/node-exporter:v1.3.1
     container_name: c3-monitoring-node-exporter
     volumes:
       - /proc:/host/proc:ro
@@ -59,7 +59,7 @@ services:
     restart: unless-stopped
 
   c3-monitoring-alert-manager:
-    image: prom/alertmanager
+    image: prom/alertmanager:v0.23.0
     container_name: c3-monitoring-alert-manager
     restart: unless-stopped
     ports:
@@ -71,7 +71,7 @@ services:
       - "--storage.path=/alertmanager"
 
   c3-monitoring-cadvisor:
-    image: gcr.io/cadvisor/cadvisor
+    image: gcr.io/cadvisor/cadvisor:v0.43.0
     container_name: c3-monitoring-cadvisor
     volumes:
       - /:/rootfs:ro
@@ -81,8 +81,3 @@ services:
     expose:
       - 8080
     restart: unless-stopped
-
-# optional one can use volumes
-# volumes:
-#   prometheus_data: {}
-#   grafana_data: {}
