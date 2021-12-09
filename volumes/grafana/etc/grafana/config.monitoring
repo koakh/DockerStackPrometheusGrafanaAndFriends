@@ -1,2 +1,5 @@
 GF_USERS_ALLOW_SIGN_UP=false
 GF_SECURITY_ADMIN_PASSWORD=CYiMAhWKdZsuzjAL6PIOL7yV6VkFGNWO
+GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource
+# GF_SERVER_DOMAIN=grafana.c3edu.online
+# GF_SERVER_ROOT_URL=https://grafana.c3edu.online:443

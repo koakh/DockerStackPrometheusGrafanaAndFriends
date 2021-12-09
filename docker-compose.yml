@@ -31,15 +31,15 @@ services:
     # required to use user root
     user: root
     restart: unless-stopped
-    environment:
-      GF_INSTALL_PLUGINS: "grafana-clock-panel,grafana-simple-json-datasource"
     volumes:
       - ./volumes/grafana/etc/grafana/provisioning:/etc/grafana/provisioning
+      # TODO:
+      - ./volumes/grafana/etc/grafana/grafana.ini:/etc/grafana/grafana.ini
       - ./volumes/grafana/var/lib/grafana:/var/lib/grafana
     env_file:
       - ./volumes/grafana/etc/grafana/config.monitoring
     ports:
-      - 9070:3000
+      - 9080:3000
     depends_on:
       - c3-monitoring-prometheus
 
