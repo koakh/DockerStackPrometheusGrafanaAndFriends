@@ -3,3 +3,4 @@ volumes/prometheus/chunks_head
 volumes/prometheus/wal
 volumes/prometheus/lock
 .trash/prometheus
+.bak/*.tgz
