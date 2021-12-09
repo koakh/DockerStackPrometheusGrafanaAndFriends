@@ -33,7 +33,6 @@ services:
     restart: unless-stopped
     volumes:
       - ./volumes/grafana/etc/grafana/provisioning:/etc/grafana/provisioning
-      # TODO:
       - ./volumes/grafana/etc/grafana/grafana.ini:/etc/grafana/grafana.ini
       - ./volumes/grafana/var/lib/grafana:/var/lib/grafana
     env_file:

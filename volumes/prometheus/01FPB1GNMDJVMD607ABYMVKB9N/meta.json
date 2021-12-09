@@ -1,0 +1,17 @@
+{
+	"ulid": "01FPB1GNMDJVMD607ABYMVKB9N",
+	"minTime": 1638889915006,
+	"maxTime": 1638892800000,
+	"stats": {
+		"numSamples": 2195176,
+		"numSeries": 18481,
+		"numChunks": 26272
+	},
+	"compaction": {
+		"level": 1,
+		"sources": [
+			"01FPB1GNMDJVMD607ABYMVKB9N"
+		]
+	},
+	"version": 1
+}
