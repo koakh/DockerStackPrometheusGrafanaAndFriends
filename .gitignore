@@ -1,4 +1,5 @@
 volumes/grafana/var/lib/grafana
+volumes/grafana/var/lib/grafana/grafana.db
 volumes/prometheus/chunks_head
 volumes/prometheus/wal
 volumes/prometheus/lock
