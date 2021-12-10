@@ -1,7 +1,11 @@
+.trash/prometheus
+.bak/*.tgz
 volumes/grafana/var/lib/grafana
 volumes/grafana/var/lib/grafana/grafana.db
 volumes/prometheus/chunks_head
 volumes/prometheus/wal
 volumes/prometheus/lock
-.trash/prometheus
-.bak/*.tgz
+volumes/prometheus/**/chunks
+volumes/prometheus/**/index
+volumes/prometheus/**/meta.json
+volumes/prometheus/**/tombstones
